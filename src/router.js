@@ -19,6 +19,32 @@ export const constantRouterMap = [
             component: () => import('@/views/login/index')
         }]
     },
+    // 登录
+    {
+        path: '/login',
+        component: Layout,
+        children: [
+            {
+                path: 'login',
+                name: 'login',
+                component: () => import('@/views/login/index'),
+                meta: { title: 'login'}
+            },
+        ]
+    },
+    // 个人信息
+    {
+        path: '/center',
+        component: Layout,
+        children: [
+            {
+                path: 'personalInfo',
+                name: 'personalInfo',
+                component: () => import('@/views/center/personalInfo'),
+                meta: { title: '个人信息'}
+            }
+        ]
+    },
 
 ];
 export default new Router({
