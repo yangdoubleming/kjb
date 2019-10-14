@@ -1,16 +1,9 @@
 <template>
     <div class="login-container">
-        <div class="header">
-            <div class="use-width">
-                <img :src="logo2" class="login-logo">
-                <div class="head-word">账号登录</div>
-            </div>
-        </div>
         <div class="login-box">
-            <img :src="loginLeft" class="login-left">
             <div class="login-right">
                 <div class="up">
-                    <img :src="logo" style="float:right;margin-top:33px;margin-right:35px;" />
+                    <img :src="logo" style="float:right;margin-top:20px;margin-right:35px;height:80px;" />
                 </div>
                 <div style="width:288px;margin:25px auto;">
                     <div style="color:#292929;font-size:24px; margin-bottom:25px;">欢迎登录</div>
@@ -28,17 +21,25 @@
                             <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on"
                             placeholder="密码"></el-input>
                         </el-form-item>
+                        <el-form-item style="border:none;line-height:14px;" label="">
+                            <el-col :span="2">
+                                <el-checkbox-group v-model="check">
+                                    <el-checkbox label="" name="type"></el-checkbox>
+                                </el-checkbox-group>
+                            </el-col>
+                            <span style="color:#606266">我已阅读并同意
+                                <a style="color:#409EFF;cursor:pointer;" href="./index_files/授权书.pdf" target="_blank" >《授权协议》</a>
+                            </span>
+                        </el-form-item>
                         <el-form-item>
                             <div style="width:100%;" :loading="loading" v-loading="loading" @click="handleLogin" class="login-in">
                             登  录
                             </div>
                         </el-form-item>
+                        <div style="text-align:center;font-size:16px;">没有账号？<el-button type="text" style="font-size:16px;">立即注册</el-button></div>
                     </el-form>
                 </div>
             </div>
-        </div>
-        <div style="position:fixed;bottom:15px;font-size:14px;color:black;left:50%;margin-left:-200px;">
-            版权所有©  2018 豆沙包科技有限公司 沪ICP备15015443号-1
         </div>
     </div>
 </template>
@@ -46,8 +47,6 @@
 <script>
 import { isvalidUsername } from "@/utils/validate";
 import logo from '@/assets/login_logo.png'
-import logo2 from '@/assets/login_logo2.png'
-import loginLeft from '@/assets/login_left.png'
 
 export default {
     name: "login",
@@ -87,8 +86,7 @@ export default {
             loading: false,
             pwdType: "password",
             logo,
-            logo2,
-            loginLeft,
+            check:false,
         };
     },
     methods: {
@@ -152,10 +150,9 @@ export default {
         }
     }
     .login-container{
-        width: 100%;
         height: 100vh;
-        background-image: url(../../assets/login_bg.jpg);
-        background-repeat:round;
+        width: 1200px;
+        margin: 0 auto;
     }
     .use-width {
         width: 1200px;
@@ -179,23 +176,24 @@ export default {
         line-height: 100px;
     }
     .login-box{
-        width: 1080px;
+        width: 360px;
         height: 540px;
         margin: 0 auto;
         margin-top:50px; 
         background: white;
+        float: right;
     }
     .login-left{
         width: 720px;
         height: 540px;
-        float: left;
+        float: right;
     }
     .login-right{
         width: 360px;
         height: 540px;
         float: left;
         .up{
-            height: 158px;
+            height: 130px;
             border-bottom: 1px solid #bdc4d3;
         }
     }

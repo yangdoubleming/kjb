@@ -6,12 +6,11 @@ import Layout from './views/layout/Layout'
 Vue.use(Router)
 
 export const constantRouterMap = [
-    { path: '/login', component: () => import('@/views/login/index'), hidden: true },
     { path: '/404', component: () => import('@/views/404'), hidden: true },
     {
         path: '/',
         component: Layout,
-        redirect: '/login',
+        redirect: '/center/login',
         name: 'login',
         hidden: true,
         children: [{
@@ -21,7 +20,7 @@ export const constantRouterMap = [
     },
     // 登录
     {
-        path: '/login',
+        path: '/center',
         component: Layout,
         children: [
             {
@@ -42,6 +41,19 @@ export const constantRouterMap = [
                 name: 'personalInfo',
                 component: () => import('@/views/center/personalInfo'),
                 meta: { title: '个人信息'}
+            }
+        ]
+    },
+    // 企业信息
+    {
+        path: '/center',
+        component: Layout,
+        children: [
+            {
+                path: 'companyInfo',
+                name: 'companyInfo',
+                component: () => import('@/views/center/companyInfo'),
+                meta: { title: '企业信息'}
             }
         ]
     },

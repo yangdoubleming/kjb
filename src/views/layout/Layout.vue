@@ -1,8 +1,11 @@
 <template>
-  <div class="app-wrapper" :class="classObj">
+  <div :class="$route.path=='/center/login'?'app-wrapper2':'app-wrapper'">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"></div>
     <navbar></navbar>
-    <div class="content">
+    <div class="content" v-if="$route.path=='/center/login'">
+        <app-main></app-main>
+    </div>
+    <div class="content" v-else>
         <sidebar></sidebar>
         <app-main style="width: 978px;"></app-main>
     </div>
@@ -23,6 +26,8 @@ export default {
         Foot
     },
     mixins: [ResizeMixin],
+    created(){
+    },
     computed: {
         sidebar() {
             return this.$store.state.app.sidebar;
@@ -52,8 +57,27 @@ export default {
 .app-wrapper {
     @include clearfix;
     position: relative;
-    height: 100%;
+    height: 100vh;
     width: 100%;
+    &.mobile.openSidebar {
+        position: fixed;
+        top: 0;
+    }
+    .content{
+        width: 1200px;
+        margin: 30px auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+.app-wrapper2 {
+    @include clearfix;
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    background-image: url(../../assets/login_bg.jpg);
+    background-repeat:round;
     &.mobile.openSidebar {
         position: fixed;
         top: 0;

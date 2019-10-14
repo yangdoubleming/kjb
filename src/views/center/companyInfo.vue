@@ -4,47 +4,46 @@
           <div class="name">借款人信息</div>
       </div>
       <div style="margin:50px;">
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="130px" class="demo-ruleForm">
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px" class="demo-ruleForm">
             <el-row type="flex" class="row-bg" justify="space-around">
                 <el-col :span="10">
-                    <el-form-item label="借款人姓名：" prop="name">
+                    <el-form-item label="企业名称：" prop="name">
                         <el-input v-model="ruleForm.name"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="10">
-                    <el-form-item label="借款人手机号：" prop="name">
+                    <el-form-item label="统一社会信用代码：" prop="name">
                         <el-input v-model="ruleForm.name"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row type="flex" class="row-bg" justify="space-around">
                 <el-col :span="10">
-                  <el-form-item label="借款人身份证：" prop="name">
+                  <el-form-item label="法人姓名：" prop="name">
                       <el-input v-model="ruleForm.name"></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="10">
-                  <el-form-item label="借款人邮箱：" prop="name">
+                  <el-form-item label="法人身份证：" prop="name">
                       <el-input v-model="ruleForm.name"></el-input>
                   </el-form-item>
                 </el-col>
             </el-row>
-            <el-form-item label="婚姻状况：" prop="name">
-                <el-radio-group v-model="ruleForm.resource">
-                    <el-radio label="已婚"></el-radio>
-                    <el-radio label="未婚"></el-radio>
-                    <el-radio label="离婚"></el-radio>
-                </el-radio-group>
-            </el-form-item>
-            <el-form-item label="学历：" prop="resource">
-                <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
-                    <el-option label="区域一" value="shanghai"></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
-                </el-select>
-            </el-form-item>
             <el-row type="flex" class="row-bg" justify="space-around">
-                <el-col :span="3">
-                    <el-form-item label="现家庭地址：" prop="name">
+                <el-col :span="10">
+                  <el-form-item label="手机号码：" prop="name">
+                      <el-input v-model="ruleForm.name"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="10">
+                  <el-form-item label="邮箱：" prop="name">
+                      <el-input v-model="ruleForm.name"></el-input>
+                  </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row type="flex" class="row-bg" justify="space-around">
+                <el-col :span="4">
+                    <el-form-item label="法人现居住地址：" prop="name">
                     </el-form-item>
                 </el-col>
                 <el-col :span="4">
@@ -69,8 +68,41 @@
                     <el-input v-model="ruleForm.name"></el-input>
                 </el-col>
             </el-row>
+            <el-row type="flex" class="row-bg" justify="space-around">
+                <el-col :span="4">
+                    <el-form-item label="法人现办公地址：" prop="name">
+                    </el-form-item>
+                </el-col>
+                <el-col :span="4">
+                    <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
+                        <el-option label="区域一" value="shanghai"></el-option>
+                        <el-option label="区域二" value="beijing"></el-option>
+                    </el-select>
+                </el-col>
+                <el-col :span="4">
+                    <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
+                        <el-option label="区域一" value="shanghai"></el-option>
+                        <el-option label="区域二" value="beijing"></el-option>
+                    </el-select>
+                </el-col>
+                <el-col :span="4">
+                    <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
+                        <el-option label="区域一" value="shanghai"></el-option>
+                        <el-option label="区域二" value="beijing"></el-option>
+                    </el-select>
+                </el-col>
+                <el-col :span="6">
+                    <el-input v-model="ruleForm.name"></el-input>
+                </el-col>
+            </el-row>
+            <div style="margin-left:150px;overflow:hidden;height:30px;">
+                <el-checkbox-group v-model="check" style="float:left;margin-right:5px;">
+                    <el-checkbox label="" name="type"></el-checkbox>
+                </el-checkbox-group>
+                <span style="color:#606266;font-size:14px;float:left;line-height:18px;">法人信息同借款人信息&nbsp;&nbsp;<label style="color:#ff6e1f;border:1px solid #ff6e1f;height:16px;border-radius:3px;">跨境保</label></span>
+            </div>
             <el-form-item>
-                <span style="color:#eb105c;font-size:14px;">提示：借款人需要为店铺的实际控制人</span>
+                <span style="color:#eb105c;font-size:14px;">提示：企业应为贷款申请主体</span>
             </el-form-item>
             <el-form-item>
                 <div @click="submitForm('ruleForm')" class="login-in">提&nbsp;&nbsp;&nbsp;交</div>
@@ -93,8 +125,9 @@ export default {
           delivery: false,
           type: [],
           resource: '',
-          desc: ''
+          desc: '',
         },
+        check:false,
         rules: {
           name: [
             { required: true, message: '请输入活动名称', trigger: 'blur' },
