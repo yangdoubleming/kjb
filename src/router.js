@@ -4,15 +4,17 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export const constantRouterMap = [
-    { path: '/404', component: () => import('@/views/404'), hidden: true },
+    { path: '/one', component: () => import('@/views/one'), hidden: true },
+    { path: '/two', component: () => import('@/views/two'), hidden: true },
+    { path: '/three', component: () => import('@/views/three'), hidden: true },
     {
         path: '/',
-        redirect: '/404',
-        name: '404',
+        redirect: '/one',
+        name: 'one',
         hidden: true,
         children: [{
-            path: '404',
-            component: () => import('@/views/404')
+            path: 'one',
+            component: () => import('@/views/one')
         }]
     },
 ];
