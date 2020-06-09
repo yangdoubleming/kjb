@@ -2,7 +2,7 @@
   <section>
     <div class="title">
       <img :src="arrow" class="arrow" @click="reduce" />
-      跨商贷
+      可贷额度
     </div>
     <div class="imgBox">
         600000
