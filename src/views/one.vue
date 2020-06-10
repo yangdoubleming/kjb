@@ -168,6 +168,8 @@ export default {
     reduce(){
       if(this.actvieNum>1){
         this.actvieNum--
+      }else{
+        this.$router.push({path: `/home`});
       }
     },
     submit(){
