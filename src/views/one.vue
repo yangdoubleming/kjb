@@ -29,7 +29,7 @@
         <el-checkbox v-model="checked6" label="其他平台" class="radioTxt"></el-checkbox>
       </div>
       <div class="radio" v-for="ele in item.rList" v-else>
-        <el-radio v-model="radio1" :label="ele.id" class="radioTxt" @change="pushRadio">{{ele.label}}</el-radio>
+        <el-radio v-model="valueNow" :label="ele.label" class="radioTxt" @change="pushRadio">{{ele.label}}</el-radio>
       </div>
     </div>
     <div class="btnBox">
@@ -49,7 +49,7 @@ export default {
       top,
       arrow,
       actvieNum:1,
-      radio1:'1',
+      valueNow:'',
       checked1:'',
       checked2:'',
       checked3:'',
@@ -156,7 +156,21 @@ export default {
             {id:"2",label:'否'},
           ]
         }
-      ]
+      ],
+      submitObj: {
+        registeredCapital:"",
+        establishmentYears:"",
+        existEstate:"",
+        businessAddress:"",
+        mainEcommercePlatform:"",
+        operationTime:"",
+        annualSales:"",
+        returnRate:"",
+        isProfit:"",
+        financingLoans:"",
+        phone:"",
+        validateCode:""
+      }
     }
   },
   methods: {
@@ -178,6 +192,40 @@ export default {
     },
     pushRadio(v){
       console.log(222,v)
+    },
+    setObj(){
+      switch (this.actvieNum) {
+        case 1:
+          this.submitObj.registeredCapital = this.valueNow
+          break; 
+        case 2:
+          this.submitObj.establishmentYears = this.valueNow
+          break; 
+        case 3:
+          this.submitObj.existEstate = this.valueNow
+          break; 
+        case 4:
+          this.submitObj.businessAddress = this.valueNow
+          break; 
+        case 5:
+          this.submitObj.mainEcommercePlatform = this.valueNow
+          break; 
+        case 6:
+          this.submitObj.operationTime = this.valueNow
+          break;
+        case 7:
+          this.submitObj.annualSales = this.valueNow
+          break;
+        case 8:
+          this.submitObj.returnRate = this.valueNow
+          break;
+        case 9:
+          this.submitObj.isProfit = this.valueNow
+          break;
+        case 10:
+          this.submitObj.financingLoans = this.valueNow
+          break;
+      } 
     }
   }
 }
