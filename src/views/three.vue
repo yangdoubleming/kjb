@@ -91,7 +91,12 @@ export default {
         obj.phone = this.phone
         obj.validateCode = this.verifyCode
         easylink(obj).then(result => {
-           this.$message.success('提交成功')
+            if(result.code==0){
+                this.$message.success('提交成功')
+            }else{
+                this.$message.error(result.msg)
+            }
+           
         }).catch(err => {
             this.$message({message:err.msg,type:'error'})
         })
