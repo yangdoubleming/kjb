@@ -8,7 +8,7 @@
     <div class="info">
         <el-row :gutter="10" style="width:80%;margin:0px auto">
             <el-col :span="14">
-                <el-input v-model="verifyCode"></el-input>
+                <el-input v-model="phone" placeholder="请输入手机号"></el-input>
             </el-col>
             <el-col :span="8">
                 <el-button @click="getCode" :disabled="btnStatus">{{paracont}}</el-button>
@@ -16,10 +16,10 @@
         </el-row>
         <el-row :gutter="10" style="width:80%;margin:10px auto">
             <el-col :span="23">
-                <el-input v-model="verifyCode"></el-input>
+                <el-input v-model="verifyCode" placeholder="请输入验证码"></el-input>
             </el-col>
         </el-row>
-        <div class="btn">提 交</div>
+        <div class="btn" @click="submit">提 交</div>
     </div>
     <div class="bot">
         <img :src="qrcode" class="qrcode" />
@@ -32,6 +32,7 @@
 import banner from '@/assets/banner.png'
 import qrcode from '@/assets/qrcode.png'
 import arrow from '@/assets/arrow.png'
+import { saasGetVerifyCode, easylink } from '@/api/login'
 export default {
   name: 'page404',
   data() {
@@ -39,6 +40,7 @@ export default {
         banner,
         qrcode,
         arrow,
+        phone:'',
         verifyCode:'',
         paracont:'获取验证码',
         btnStatus:false,
@@ -55,12 +57,12 @@ export default {
         var second = null, timePromise = undefined;
         if (second === null) {
             second = 60;
-            if (!this.registerForm.telephone) {
+            if (!this.phone) {
                 this.$message({message:'手机号不能为空',type:'warning'})
                 second = null;
                 return false;
             } else {
-                getVerifyCode({phoneNo:this.registerForm.telephone,photoCode:this.registerForm.photoCode}).then(result => {
+                saasGetVerifyCode({phoneNo:this.phone,photoCode:"DSBKJ"}).then(result => {
                     const _this = this;
                     this.btnStatus = true;
                     timePromise = setInterval(function () {
@@ -84,6 +86,16 @@ export default {
             return false;
         }
     },
+    submit(){
+        let obj = JSON.parse(localStorage.getItem('submitObj'))
+        obj.phone = this.phone
+        obj.validateCode = this.verifyCode
+        easylink(obj).then(result => {
+           this.$message.success('提交成功')
+        }).catch(err => {
+            this.$message({message:err.msg,type:'error'})
+        })
+    }
   }
 }
 </script>

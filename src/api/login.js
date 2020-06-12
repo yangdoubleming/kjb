@@ -1,27 +1,17 @@
 import request from '@/utils/request'
 
-export function login(telephone, password) {
+export function saasGetVerifyCode(param) {                  // saas获取验证码
     return request({
-        url: '/user/login',
+        url: `/code/getPhoneCodeVerify`,
         method: 'post',
-        data: {
-            telephone,
-            password
-        }
+        data: param
     })
 }
 
-export function getInfo(token) {
+export function easylink(param) {                  // saas获取验证码
     return request({
-        url: '/user/menus',
-        method: 'get',
-        // params: { token }
-    })
-}
-
-export function logout() {
-    return request({
-        url: '/user/logout',
-        method: 'post'
+        url: `/easylink/submit`,
+        method: 'post',
+        data: param
     })
 }

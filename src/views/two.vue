@@ -5,7 +5,8 @@
       可贷额度
     </div>
     <div class="imgBox">
-        600000
+        {{money}}
+        <div style="font-size:1rem;line-height:2rem">期限最长{{month}}个月&nbsp;&nbsp;|&nbsp;&nbsp;日利率低至年化{{rate}}%</div>
     </div>
     <div class="btn" @click="next">我 要 贷 款</div>
   </section>
@@ -20,7 +21,49 @@ export default {
     return {
       bg,
       arrow,
-     
+      money:'',
+      month:'',
+      rate:''
+    }
+  },
+  mounted(){
+    let saleMoney = JSON.parse(localStorage.getItem('submitObj')).annualSales
+    if(saleMoney == "500万以下"){
+      saleMoney = 5000000
+    }
+    if(saleMoney == "100万以xia"){
+      saleMoney = 1000000
+    }
+    if(saleMoney == "1000万以下"){
+      saleMoney = 10000000
+    }
+    if(saleMoney == "1000万以上"){
+      saleMoney = 10000000
+    }
+    let city = JSON.parse(localStorage.getItem('submitObj')).businessAddress
+    if(city.indexOf("宁波")){
+      this.money=saleMoney*0.1
+      if(this.money>3000000){
+        this.money = 3000000
+      }
+      this.month=12
+      this.rate=9
+    }
+    if(city.indexOf("浙江")||city.indexOf("上海")||city.indexOf("江苏")){
+      this.money=saleMoney*0.4
+      if(this.money>10000000){
+        this.money = 10000000
+      }
+      this.month=12
+      this.rate=5
+    }
+    if(city.indexOf("深圳")||city.indexOf("广州")||city.indexOf("广东")){
+      this.money=saleMoney*0.1
+      if(this.money>10000000){
+        this.money = 10000000
+      }
+      this.month=12
+      this.rate=5
     }
   },
   methods: {
@@ -30,7 +73,7 @@ export default {
     next(){
         this.$router.push({path: `/three`});
     }
-  }
+  },
 }
 </script>
 

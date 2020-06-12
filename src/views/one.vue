@@ -11,25 +11,22 @@
     <div class="content" v-for="item in qList" :key="'q'+item.num" v-show="actvieNum==item.num">
       <div class="radioTitle">{{item.title}}</div>
       <div class="radio" v-if="item.num==5">
-        <el-checkbox v-model="checked1" label="Amazon" class="radioTxt"></el-checkbox>
-      </div>
-      <div class="radio" v-if="item.num==5">
-        <el-checkbox v-model="checked2" label="eBay" class="radioTxt"></el-checkbox>
-      </div>
-      <div class="radio" v-if="item.num==5">
-        <el-checkbox v-model="checked3" label="AliExpress" class="radioTxt"></el-checkbox>
-      </div>
-      <div class="radio" v-if="item.num==5">
-        <el-checkbox v-model="checked4" label="Wish" class="radioTxt"></el-checkbox>
-      </div>
-      <div class="radio" v-if="item.num==5">
-        <el-checkbox v-model="checked5" label="Shopee" class="radioTxt"></el-checkbox>
-      </div>
-      <div class="radio" v-if="item.num==5">
-        <el-checkbox v-model="checked6" label="其他平台" class="radioTxt"></el-checkbox>
+        <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+          <el-checkbox v-for="city in rList" :label="city.label" :key="city.label">{{city.label}}</el-checkbox>
+        </el-checkbox-group>
       </div>
       <div class="radio" v-for="ele in item.rList" v-else>
         <el-radio v-model="valueNow" :label="ele.label" class="radioTxt" @change="pushRadio">{{ele.label}}</el-radio>
+      </div>
+      <div class="radio" v-if="item.num==4">
+        <div style="display: flex">
+            <v-distpicker
+            @selected="onSelectedD" 
+            class="address"
+            :province="province" 
+            :city="city"
+            :area="area"/>
+        </div> 
       </div>
     </div>
     <div class="btnBox">
@@ -42,20 +39,30 @@
 <script>
 import top from '@/assets/top.png'
 import arrow from '@/assets/arrow.png'
+import VDistpicker from 'v-distpicker'
 export default {
   name: 'page404',
+  components: {
+    VDistpicker,
+  },
   data() {
     return {
       top,
       arrow,
       actvieNum:1,
       valueNow:'',
-      checked1:'',
-      checked2:'',
-      checked3:'',
-      checked4:'',
-      checked5:'',
-      checked6:'',
+      checkedCities:[],
+      rList:[
+        {id:"1",label:'Amazon'},
+        {id:"2",label:'eBay'},
+        {id:"3",label:'AliExpress'},
+        {id:"4",label:'Wish'},
+        {id:"5",label:'Shopee'},
+        {id:"6",label:'其他平台'},
+      ],
+      province:'',
+      city:'',
+      area:"",
       qList:[
         {
           title:"1、企业注册资本",
@@ -94,6 +101,7 @@ export default {
             {id:"2",label:'宁波'},
             {id:"3",label:'广州'},
             {id:"4",label:'上海'},
+            {id:"5",label:'其他城市'},
           ]
         },
         {
@@ -175,6 +183,37 @@ export default {
   },
   methods: {
     next(){
+      this.setObj()
+      if(this.actvieNum==1&&!this.submitObj.registeredCapital){
+        return this.$message.warning("请选择")
+      }
+      if(this.actvieNum==2&&!this.submitObj.establishmentYears){
+        return this.$message.warning("请选择")
+      }
+      if(this.actvieNum==3&&!this.submitObj.existEstate){
+        return this.$message.warning("请选择")
+      }
+      if(this.actvieNum==4&&!this.submitObj.businessAddress){
+        return this.$message.warning("请选择")
+      }
+      if(this.actvieNum==5&&!this.submitObj.mainEcommercePlatform){
+        return this.$message.warning("请选择")
+      }
+      if(this.actvieNum==6&&!this.submitObj.operationTime){
+        return this.$message.warning("请选择")
+      }
+      if(this.actvieNum==7&&!this.submitObj.annualSales){
+        return this.$message.warning("请选择")
+      }
+      if(this.actvieNum==8&&!this.submitObj.returnRate){
+        return this.$message.warning("请选择")
+      }
+      if(this.actvieNum==9&&!this.submitObj.isProfit){
+        return this.$message.warning("请选择")
+      }
+      if(this.actvieNum==10&&!this.submitObj.financingLoans){
+        return this.$message.warning("请选择")
+      }
       if(this.actvieNum<10){
         this.actvieNum++
       }
@@ -187,11 +226,19 @@ export default {
       }
     },
     submit(){
-      console.log(666666,this.qList)
+      console.log(666666,this.submitObj)
+      localStorage.setItem('submitObj', JSON.stringify(this.submitObj))
       this.$router.push({path: `/two`});
     },
     pushRadio(v){
       console.log(222,v)
+    },
+    onSelectedD(data) {
+      this.province = data.province.value
+      this.city = data.city.value
+      this.area = data.area.value
+    },
+    handleCheckedCitiesChange(value){
     },
     setObj(){
       switch (this.actvieNum) {
@@ -205,10 +252,14 @@ export default {
           this.submitObj.existEstate = this.valueNow
           break; 
         case 4:
-          this.submitObj.businessAddress = this.valueNow
+          if(this.valueNow == "其他城市"){
+            this.submitObj.businessAddress = `${this.province}${this.city}${this.area}`
+          }else{
+            this.submitObj.businessAddress = this.valueNow
+          }
           break; 
         case 5:
-          this.submitObj.mainEcommercePlatform = this.valueNow
+          this.submitObj.mainEcommercePlatform = this.checkedCities.join(",")
           break; 
         case 6:
           this.submitObj.operationTime = this.valueNow
@@ -223,7 +274,7 @@ export default {
           this.submitObj.isProfit = this.valueNow
           break;
         case 10:
-          this.submitObj.financingLoans = this.valueNow
+          this.submitObj.financingLoans = this.valueNow||this.submitObj.isProfit
           break;
       } 
     }
