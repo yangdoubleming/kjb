@@ -1,2 +1,2 @@
-const BASE_URL='http://api.dousha8ao.com'
+const BASE_URL='http://api.dowsure.com/receivesure'
 export{ BASE_URL }
