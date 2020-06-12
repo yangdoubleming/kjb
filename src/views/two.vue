@@ -28,17 +28,20 @@ export default {
   },
   mounted(){
     let saleMoney = JSON.parse(localStorage.getItem('submitObj')).annualSales
-    if(saleMoney == "500万以下"){
+    if(saleMoney == "500万以上"){
       saleMoney = 5000000
-    }
-    if(saleMoney == "100万以xia"){
-      saleMoney = 1000000
-    }
-    if(saleMoney == "1000万以下"){
-      saleMoney = 10000000
     }
     if(saleMoney == "1000万以上"){
       saleMoney = 10000000
+    }
+    if(saleMoney == "3000万以上"){
+      saleMoney = 30000000
+    }
+    if(saleMoney == "8000万以上"){
+      saleMoney = 80000000
+    }
+    if(saleMoney == "1亿以上"){
+      saleMoney = 100000000
     }
     let city = JSON.parse(localStorage.getItem('submitObj')).businessAddress
     if(city.indexOf("宁波")){
